@@ -11,8 +11,7 @@ const UserSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true,
-    lowercase: true
+    unique: true
   },
   password: {
     type: String,
@@ -29,11 +28,11 @@ const UserSchema = new mongoose.Schema({
   },
   isSuperUser: {
     type: Boolean,
-    defaultValue: false
+    default: false
   },
   isUserActive: {
     type: Boolean,
-    defaultValue: false
+    default: false
   },
   createdAt: {
     type: Date,
@@ -59,6 +58,11 @@ UserSchema.statics = {
   generateToken({ id }) {
     return jwt.sign({ id }, config.auth.secret, {
       expiresIn: config.auth.ttl
+    });
+  },
+  generateRefreshToken({ id }) {
+    return jwt.sign({ id }, config.auth.secret, {
+      expiresIn: config.auth.ttl * 24 * 30
     });
   }
 };

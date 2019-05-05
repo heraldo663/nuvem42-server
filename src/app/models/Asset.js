@@ -2,7 +2,27 @@ const mongoose = require("mongoose");
 const mongoosePaginate = require("mongoose-paginate");
 
 const AssetSchema = mongoose.Schema({
-  title: {
+  name: {
+    type: String,
+    required: true
+  },
+  mimetype: {
+    type: String,
+    required: true
+  },
+  encoding: {
+    type: String,
+    required: true
+  },
+  size: {
+    type: String,
+    required: true
+  },
+  filename: {
+    type: String,
+    required: true
+  },
+  url: {
     type: String,
     required: true
   },
@@ -18,7 +38,7 @@ const AssetSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Dir"
   },
-  
+
   createdAt: {
     type: Date,
     default: Date.now

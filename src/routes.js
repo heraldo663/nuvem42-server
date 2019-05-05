@@ -2,8 +2,6 @@ const express = require("express");
 const validate = require("express-validation");
 const handle = require("express-async-handler");
 
-const authMiddelware = require("./app/middlewares/auth");
-
 const controllers = require("./app/controller");
 const validators = require("./app/validators");
 
@@ -28,10 +26,5 @@ routes.post(
   validate(validators.Session),
   handle(controllers.SessionController.store)
 );
-
-/**
- * Authentication middleware
- */
-routes.use(authMiddelware);
 
 module.exports = routes;
