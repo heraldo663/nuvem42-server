@@ -5,8 +5,5 @@
     "dokku",
     "nodejs",
     "https://heraldo.tech"
-  ],
-  "scripts": {
-
-  }
+  ]
 }

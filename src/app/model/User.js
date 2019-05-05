@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const config = require("../../config");
 
 const UserSchema = new mongoose.Schema({
-  name: {
+  username: {
     type: String,
     required: true
   },
@@ -17,6 +17,23 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true
+  },
+  passwordResetToken: {
+    type: String
+  },
+  activeAcountToken: {
+    type: String
+  },
+  passwordResetTokenExpires: {
+    type: Date
+  },
+  isSuperUser: {
+    type: Boolean,
+    defaultValue: false
+  },
+  isUserActive: {
+    type: Boolean,
+    defaultValue: false
   },
   createdAt: {
     type: Date,
