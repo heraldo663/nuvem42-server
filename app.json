@@ -1,0 +1,12 @@
+{
+  "name": "nuvem42-server",
+  "description": "Api server for the nuvem42 app",
+  "keywords": [
+    "dokku",
+    "nodejs",
+    "https://heraldo.tech"
+  ],
+  "scripts": {
+
+  }
+}
