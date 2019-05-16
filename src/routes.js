@@ -2,8 +2,13 @@ const express = require("express");
 const validate = require("express-validation");
 const handle = require("express-async-handler");
 
-const controllers = require("./app/controller");
-const validators = require("./app/validators");
+const sessionValidator = require("./app/validators/Session");
+const userValidator = require("./app/validators/User");
+
+const isFirstUser = require("./app/middlewares/isFirstUser");
+
+const UserController = require("./app/controller/auth/UserController");
+const SessionController = require("./app/controller/auth/SessionController");
 
 const routes = express.Router();
 
@@ -18,13 +23,14 @@ routes.get("/", (req, res) => {
  */
 routes.post(
   "/users",
-  validate(validators.User),
-  handle(controllers.UserController.store)
+  validate(userValidator),
+  isFirstUser,
+  handle(UserController.store)
 );
 routes.post(
   "/sessions",
-  validate(validators.Session),
-  handle(controllers.SessionController.store)
+  validate(sessionValidator),
+  handle(SessionController.store)
 );
 
 module.exports = routes;

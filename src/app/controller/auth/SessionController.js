@@ -1,5 +1,5 @@
 /* eslint-disable class-methods-use-this */
-const User = require("../models/User");
+const User = require("../../models/User");
 
 class SessionController {
   async store(req, res) {

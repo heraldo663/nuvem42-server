@@ -14,7 +14,6 @@ const config = require("./config");
 class App {
   constructor() {
     this.express = express();
-
     this.sentry();
     this.auth();
     this.middleweares();
@@ -44,10 +43,17 @@ class App {
   }
 
   database() {
-    mongoose.connect(config.database.uri, {
-      useNewUrlParser: true,
-      useCreateIndex: true
-    });
+    if (process.env.NODE_ENV == "test") {
+      mongoose.connect(config.database.uri + "_test", {
+        useNewUrlParser: true,
+        useCreateIndex: true
+      });
+    } else {
+      mongoose.connect(config.database.uri, {
+        useNewUrlParser: true,
+        useCreateIndex: true
+      });
+    }
   }
 
   routes() {
