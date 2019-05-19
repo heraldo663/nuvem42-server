@@ -7,16 +7,7 @@ const { factory, admin } = require("../../factory");
 
 beforeAll(async () => {
   await User.remove({});
-
-  const newUser = new User({
-    username: admin.username,
-    email: admin.email,
-    password: admin.password,
-    isSuperUser: true,
-    isUserActive: true
-  });
-
-  await newUser.save();
+  await factory.create("Admin");
 });
 
 describe("register", () => {

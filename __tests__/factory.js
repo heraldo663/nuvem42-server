@@ -13,7 +13,15 @@ factory.define("User", User, {
   email: faker.internet.email(),
   password: faker.internet.password(),
   isSuperUser: false,
-  isUserActive: false
+  isUserActive: true
+});
+
+factory.define("Admin", User, {
+  username: admin.username,
+  email: admin.email,
+  password: admin.password,
+  isSuperUser: true,
+  isUserActive: true
 });
 
 module.exports = {

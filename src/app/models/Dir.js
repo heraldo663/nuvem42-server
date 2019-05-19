@@ -6,9 +6,6 @@ const DirSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  description: {
-    type: String
-  },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -16,7 +13,8 @@ const DirSchema = mongoose.Schema({
   },
   root: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Dir"
+    ref: "Dir",
+    default: null
   },
   assets: [
     {
