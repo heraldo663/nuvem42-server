@@ -5,8 +5,6 @@ const handle = require("express-async-handler");
 const sessionValidator = require("./app/validators/Session");
 const userValidator = require("./app/validators/User");
 
-const isFirstUser = require("./app/middlewares/isFirstUser");
-
 const UserController = require("./app/controller/auth/UserController");
 const SessionController = require("./app/controller/auth/SessionController");
 
@@ -21,12 +19,7 @@ routes.get("/", (req, res) => {
 /**
  * Register, Login Routes
  */
-routes.post(
-  "/users",
-  validate(userValidator),
-  isFirstUser,
-  handle(UserController.store)
-);
+routes.post("/users", validate(userValidator), handle(UserController.store));
 routes.post(
   "/sessions",
   validate(sessionValidator),

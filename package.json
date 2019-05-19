@@ -6,11 +6,12 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production node src/index.js",
     "dev": "cross-env NODE_ENV=development nodemon src/index.js --ignore __tests__",
-    "setupTestFrameworkScriptFile": "./__tests__/setup.js",
-    "test": "cross-env NODE_ENV=test jest",
-    "test:watch": "cross-env NODE_ENV=test jest --watch"
+    "test": "cross-env NODE_ENV=test jest --detectOpenHandles",
+    "test:watch": "cross-env NODE_ENV=test jest --watch",
+    "createsuperuser": "node src/scripts/createSuperUser.js"
   },
   "devDependencies": {
+    "@shelf/jest-mongodb": "^1.0.1",
     "cross-env": "^5.2.0",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^4.2.0",

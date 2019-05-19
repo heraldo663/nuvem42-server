@@ -3,19 +3,21 @@ const User = require("../models/User");
 const Dir = require("../models/Dir");
 
 class AuthService {
-  async createUser(user, isSuperuser) {
+  async createUser(user) {
     const token = crypto
       .randomBytes(4)
       .toString("hex")
       .toUpperCase();
 
-    const newUser = await User.create({
+    const newUser = new User({
       username: user.username,
       email: user.email,
       password: user.password,
       activeAcountToken: token,
-      isSuperUser: isSuperuser
+      isSuperUser: false
     });
+
+    await newUser.save();
 
     return newUser;
   }

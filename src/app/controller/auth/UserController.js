@@ -1,26 +1,25 @@
-
 const authService = require("../../services/Auth");
-
+const User = require("../../models/User");
 class UserController {
   async store(req, res) {
-    if (res.locals.isFirstUser) {
-      const newUser = await authService.createUser(req.body, true);
-      return res.status(201).json(newUser);
-    } else {
-      const user = await User.find({
-        where: { email: req.body.email }
+    const user = await User.find({ email: req.body.email });
+
+    if (user.length !== 0) {
+      return res.status(400).json({
+        errors: {
+          msg: "Email already registered!"
+        }
       });
-      if (user.length !== 0) {
-        return res.status(400).json({
-          errors: {
-            msg: "Email already registered!"
-          }
-        });
-      } else {
-        const newUser = await authService.createUser(req.body, false);
-        await authService.createBaseDirs;
-        return res.status(201).json(newUser);
-      }
+    } else {
+      const newUser = await authService.createUser(req.body);
+      await authService.createBaseDirs;
+      return res.status(201).json({
+        data: {
+          _id: newUser._id,
+          email: newUser.email,
+          username: newUser.username
+        }
+      });
     }
   }
 }
