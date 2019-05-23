@@ -6,5 +6,6 @@ module.exports = {
   mailgun: require("./mailgun"),
   redis: require("./redis"),
   sentry: require("./sentry"),
-  storage: require("./storage")
+  storage: require("./storage"),
+  app: require("./app")
 };

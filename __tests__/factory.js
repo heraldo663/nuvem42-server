@@ -1,5 +1,6 @@
 const { factory } = require("factory-girl");
 const User = require("../src/app/models/User");
+const Dir = require("../src/app/models/Dir");
 const faker = require("faker");
 
 const admin = {
@@ -22,6 +23,10 @@ factory.define("Admin", User, {
   password: admin.password,
   isSuperUser: true,
   isUserActive: true
+});
+
+factory.define("Dir", Dir, {
+  title: faker.lorem.word()
 });
 
 module.exports = {

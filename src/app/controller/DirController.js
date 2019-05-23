@@ -40,10 +40,33 @@ class DirController {
 
   async update(req, res) {
     const { title } = req.body;
+    const { id } = req.param;
+
+    const dir = await Dir.findOneAndUpdate(
+      id,
+      {
+        title: title
+      },
+      { new: true }
+    );
+
+    return res.status(200).json({
+      data: {
+        dir
+      }
+    });
   }
 
   async delete(req, res) {
-    const { id } = req.body;
+    const { id } = req.param;
+
+    const deletedDir = await Dir.deleteOne({ _id: id });
+
+    return res.status(200).json({
+      data: {
+        dir: deletedDir
+      }
+    });
   }
 }
 

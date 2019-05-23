@@ -23,6 +23,7 @@ routes.get("/", (req, res) => {
  * Register, Login Routes
  */
 routes.post("/users", validate(userValidator), handle(UserController.store));
+routes.get("/users/:token", handle(UserController.confirmEmail));
 routes.post(
   "/sessions",
   validate(sessionValidator),
@@ -50,13 +51,13 @@ routes.post(
   handle(DirController.store)
 );
 routes.put(
-  "/dirs",
+  "/dirs/:id",
   passport.authenticate("jwt", { session: false }),
   validate(dirValidator),
   handle(DirController.update)
 );
 routes.delete(
-  "/dirs:delete",
+  "/dirs/:id",
   passport.authenticate("jwt", { session: false }),
   handle(DirController.delete)
 );

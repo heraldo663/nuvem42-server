@@ -1,6 +1,8 @@
 const crypto = require("crypto");
 const User = require("../models/User");
 const Dir = require("../models/Dir");
+const Queue = require("../services/Queue");
+const EmailValidation = require("../jobs/EmailValidation");
 
 class AuthService {
   async createUser(user) {
@@ -18,6 +20,8 @@ class AuthService {
     });
 
     await newUser.save();
+
+    this.sendConfirmationEmail(newUser);
 
     return newUser;
   }
@@ -46,7 +50,11 @@ class AuthService {
   }
 
   sendConfirmationEmail(user) {
-    console.log(user);
+    Queue.create(EmailValidation.key, {
+      user
+    }).save(err => {
+      if (!!err) console.log(err);
+    });
   }
 }
 

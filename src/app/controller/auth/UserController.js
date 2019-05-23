@@ -22,6 +22,21 @@ class UserController {
       });
     }
   }
+
+  async confirmEmail(req, res) {
+    const { token } = req.params;
+    console.log(token);
+    const user = await User.findOne({ activeAcountToken: token });
+    user.isUserActive = true;
+    await user.save();
+    return res.status(200).json({
+      data: {
+        user: user.username,
+        email: user.email,
+        activated: user.isUserActive
+      }
+    });
+  }
 }
 
 module.exports = new UserController();
