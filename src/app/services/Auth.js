@@ -21,32 +21,38 @@ class AuthService {
 
     await newUser.save();
 
+    await this.createBaseDirs(newUser._id);
+
     this.sendConfirmationEmail(newUser);
 
     return newUser;
   }
 
   async createBaseDirs(userId) {
-    const root = await Dir.create({
-      Dir: "root",
-      rootDirId: null,
-      userId: userId
-    });
-    await Dir.create({
-      Dir: "musica",
-      rootDirId: root.id,
-      userId: userId
-    });
-    await Dir.create({
-      Dir: "videos",
-      rootDirId: root.id,
-      userId: userId
-    });
-    await Dir.create({
-      Dir: "documentos",
-      rootDirId: root.id,
-      userId: userId
-    });
+    try {
+      const root = await Dir.create({
+        title: "root",
+        root: null,
+        owner: userId
+      });
+      await Dir.create({
+        title: "musica",
+        root: root.id,
+        owner: userId
+      });
+      await Dir.create({
+        title: "videos",
+        root: root.id,
+        owner: userId
+      });
+      await Dir.create({
+        title: "documentos",
+        root: root.id,
+        owner: userId
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   sendConfirmationEmail(user) {

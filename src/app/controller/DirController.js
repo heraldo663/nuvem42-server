@@ -3,7 +3,12 @@ const Dir = require("../models/Dir");
 
 class DirController {
   async index(req, res) {
-    const dir = await Dir.find({ owner: req.user._id });
+    const rootDir = await Dir.find({ owner: req.user._id, root: null });
+
+    const dir = await Dir.find({
+      owner: req.user._id,
+      root: rootDir[0]._id
+    }).populate("Asset");
 
     return res.status(200).json({
       data: {
@@ -14,7 +19,9 @@ class DirController {
 
   async show(req, res) {
     const { id } = req.body;
-    const dir = await Dir.find({ _id: id, owner: req.user._id });
+    const dir = await Dir.find({ _id: id, owner: req.user._id }).populate(
+      "Asset"
+    );
 
     return res.status(200).json({
       data: {
@@ -24,10 +31,11 @@ class DirController {
   }
 
   async store(req, res) {
-    const { title } = req.body;
+    const { title, rootId } = req.body;
     const newDir = new Dir({
       title,
-      owner: req.user._id
+      owner: req.user._id,
+      root: rootId
     });
     return newDir.save().then(dir => {
       return res.status(201).json({

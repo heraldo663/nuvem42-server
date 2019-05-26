@@ -2,6 +2,7 @@ const express = require("express");
 const validate = require("express-validation");
 const handle = require("express-async-handler");
 const passport = require("passport");
+const multer = require("multer");
 
 const sessionValidator = require("./app/validators/Session");
 const userValidator = require("./app/validators/User");
@@ -10,6 +11,9 @@ const dirValidator = require("./app/validators/Dir");
 const UserController = require("./app/controller/auth/UserController");
 const SessionController = require("./app/controller/auth/SessionController");
 const DirController = require("./app/controller/DirController");
+const AssetController = require("./app/controller/AssetController");
+
+const storage = require("./app/services/Storage");
 
 const routes = express.Router();
 
@@ -28,6 +32,39 @@ routes.post(
   "/sessions",
   validate(sessionValidator),
   handle(SessionController.store)
+);
+
+/**
+ * Assets routes
+ */
+
+const upload = multer(storage);
+
+routes.get(
+  "/assets",
+  passport.authenticate("jwt", { session: false }),
+  handle(AssetController.index)
+);
+routes.get(
+  "/assets/:id",
+  passport.authenticate("jwt", { session: false }),
+  handle(AssetController.show)
+);
+routes.post(
+  "/assets",
+  passport.authenticate("jwt", { session: false }),
+  upload.single("file"),
+  handle(AssetController.store)
+);
+routes.put(
+  "/assets/:id",
+  passport.authenticate("jwt", { session: false }),
+  handle(AssetController.update)
+);
+routes.delete(
+  "/assets/:id",
+  passport.authenticate("jwt", { session: false }),
+  handle(AssetController.delete)
 );
 
 /**

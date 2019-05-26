@@ -4,6 +4,7 @@ module.exports = {
   body: {
     title: Joi.string()
       .min(1)
-      .required()
+      .required(),
+    rootId: Joi.string()
   }
 };
