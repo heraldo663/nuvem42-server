@@ -9,7 +9,7 @@ const config = require("../../config");
 let trasnport;
 
 if (process.env.NODE_ENV === "production") {
-  trasnport = mailgunTransport(config.mailgun);
+  trasnport = nodemailer.createTransport(mailgunTransport(config.mailgun));
 } else {
   trasnport = nodemailer.createTransport(config.mail);
 }
