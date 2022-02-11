@@ -32,7 +32,7 @@
     "dotenv": "^8.0.0",
     "express": "^4.16.4",
     "express-async-handler": "^1.1.4",
-    "express-handlebars": "^3.0.2",
+    "express-handlebars": "^5.3.1",
     "express-validation": "^1.0.2",
     "glob": "^7.1.4",
     "helmet": "^3.17.0",
